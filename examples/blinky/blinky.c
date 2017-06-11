@@ -2,12 +2,14 @@
 #include "osapi.h"
 #include "gpio.h"
 #include "os_type.h"
+#include "driver/uart.h"
 
 static const int pin = 2;
 static volatile os_timer_t some_timer;
 
 void some_timerfunc(void *arg)
 {
+  os_printf("Blink...\n");
   //Do blinky stuff
   if (GPIO_REG_READ(GPIO_OUT_ADDRESS) & (1 << pin))
   {
@@ -23,6 +25,9 @@ void some_timerfunc(void *arg)
 
 void ICACHE_FLASH_ATTR user_init()
 {
+  // Set baud rate of Uart
+  uart_init(BIT_RATE_115200, BIT_RATE_115200);
+
   // init gpio sussytem
   gpio_init();
 
