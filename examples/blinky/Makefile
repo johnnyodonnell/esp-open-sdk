@@ -3,8 +3,8 @@ SDK_INCDIR      = include driver_lib/include
 SDK_INCDIR      := $(addprefix -I$(SDK_BASE)/,$(SDK_INCDIR))
 
 CC = xtensa-lx106-elf-gcc
-CFLAGS = -I. -mlongcalls $(SDK_INCDIR)
-LDLIBS = -nostdlib -Wl,--start-group -lmain -lnet80211 -lwpa -llwip -lpp \
+CFLAGS = -I./include -mlongcalls $(SDK_INCDIR) -DICACHE_FLASH
+LDLIBS = -L./lib -lpaho-embed-mqtt3c -nostdlib -Wl,--start-group -lmain -lnet80211 -lwpa -llwip -lpp \
          -lphy -lc -ldriver -Wl,--end-group -lgcc
 LDFLAGS = -Teagle.app.v6.ld
 
@@ -20,3 +20,4 @@ flash: blinky-0x00000.bin
 
 clean:
 	rm -f blinky blinky.o blinky-0x00000.bin blinky-0x10000.bin
+
